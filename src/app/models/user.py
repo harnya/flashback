@@ -11,7 +11,7 @@ class UserRegistration(BaseModel):
     id : UUID = uuid4()
     email : EmailStr
     password : str
-    auth_group_id : UUID
+    # auth_group_id : UUID
     
 
 class UserLogin(BaseModel):

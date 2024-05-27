@@ -13,5 +13,11 @@ class Settings(BaseSettings):
     PGPASSWORD: str
     model_config = SettingsConfigDict(case_sensitive=True)
 
+class GSettings(BaseSettings):
+    G_CLIENT_ID: str
+    G_CLIENT_SECRET: str
+    model_config = SettingsConfigDict(case_sensitive=True)
+
+gsettings = GSettings()
 
 settings = Settings()

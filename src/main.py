@@ -1,6 +1,7 @@
 from fastapi import FastAPI
 from app.api.endpoints import users
-app = FastAPI()
+# app = FastAPI()
+app = FastAPI(swagger_ui_parameters={"syntaxHighlight.theme": "obsidian"})
 
 app.include_router(users.router)
 
