@@ -1,4 +1,5 @@
 from pydantic import BaseModel, EmailStr
+from datetime import datetime
 from uuid import UUID, uuid4
 
 
@@ -8,10 +9,8 @@ class AuthGroup(BaseModel):
 
 
 class UserRegistration(BaseModel):
-    id : UUID = uuid4()
     email : EmailStr
     password : str
-    # auth_group_id : UUID
     
 
 class UserLogin(BaseModel):
@@ -20,8 +19,12 @@ class UserLogin(BaseModel):
 
 
 class UserProfile(BaseModel):
+    id : str 
     email : EmailStr
-    auth_group_name : str
+    is_active : bool = False
+    first_name : str | None = None
+    last_name : str | None = None
+    created_at : datetime
 
 
 

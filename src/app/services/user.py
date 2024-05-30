@@ -19,4 +19,6 @@ class UserService:
 
     def get_user_profile(self, email: str) -> Optional[UserProfile]:
         user = self.user_repo.get_user_by_email(email)
-        return None
+        if not user:
+            raise Exception("User not exist")
+        return user

@@ -1,18 +1,6 @@
 import psycopg2
-from contextlib import contextmanager
+import psycopg2.extras
 from app.core.config import settings
-
-@contextmanager
-def get_db():
-    print(settings)
-    # conn = psycopg2.connect(host=settings.get('PGHOST'), user=settings.get('PGUSER'),
-                            # database=set.get('PGDATABASE'), password=settings.get('PGPASSWORD'))
-    conn = psycopg2.connect(host=settings.PGHOST, user=settings.PGUSER, dbname=settings.PGDATABASE,
-                            password=settings.PGPASSWORD, options="-c search_path=flash,public")
-    # try:
-    yield conn
-    # finally:
-    #     conn.close()
 
 class Session():
     def __init__(self):
@@ -20,7 +8,8 @@ class Session():
          
     def __enter__(self):
         conn = psycopg2.connect(host=settings.PGHOST, user=settings.PGUSER, dbname=settings.PGDATABASE,
-                            password=settings.PGPASSWORD, options="-c search_path=flash,public")
+                            password=settings.PGPASSWORD, options="-c search_path=memory,public",
+                            cursor_factory = psycopg2.extras.DictCursor)
     
         return conn
      
@@ -28,4 +17,5 @@ class Session():
         # self.conn.cose()
         print('exit method called', exc_type, exc_value, exc_traceback)
  
+
 
