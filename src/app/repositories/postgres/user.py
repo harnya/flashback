@@ -27,3 +27,11 @@ class UserRepository:
             )
             conn.commit()  
         return user
+
+    def get_user_password(self, email: str) -> str:
+        with self.connection as conn:
+            cursor = conn.cursor(cursor_factory = psycopg2.extras.DictCursor)
+            cursor.execute("SELECT PASSWORD FROM AUTH WHERE EMAIL = %s",(email,))
+            result = cursor.fetchone()
+        return result.get("password", None)
+
