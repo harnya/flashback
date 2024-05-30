@@ -29,7 +29,6 @@ def get_user_profile(email: str, user_repo: UserRepository = Depends(get_user_re
         raise HTTPException(status_code=404, detail=str(e))
     return user_profile
 
-
 @router.post("/user/login")
 def login_user(email: str, password:str, user_repo: UserRepository = Depends(get_user_repository)):
     user_service = UserService(user_repo)

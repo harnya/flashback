@@ -12,3 +12,4 @@ class UserRepository(Protocol):
     def get_user_password(self, email: str) -> str:
         pass
 
+

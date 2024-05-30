@@ -34,3 +34,4 @@ class UserRepository:
             cursor.execute("SELECT PASSWORD FROM AUTH WHERE EMAIL = %s",(email,))
             result = cursor.fetchone()
         return result.get("password", None)
+
