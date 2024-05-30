@@ -22,3 +22,12 @@ class UserService:
         if not user:
             raise Exception("User not exist")
         return user
+    
+    def login_user(self, email: str, password: str) -> bool:
+        user = self.user_repo.get_user_by_email(email)
+        if not user:
+            raise Exception("User not exist")
+        pwd = self.user_repo.get_user_password(email)
+        pv = password_hasshing.decode_hash(password=password, hashed_password=pwd)
+        return pv
+
