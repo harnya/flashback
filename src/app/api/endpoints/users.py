@@ -1,7 +1,6 @@
 from fastapi import APIRouter, Depends
 from psycopg2.extensions import connection
-from fastapi import Request, HTTPException
-import requests
+from fastapi import HTTPException
 
 from app.db.session import Session
 from app.models.user import UserRegistration
@@ -30,13 +29,16 @@ def get_user_profile(email: str, user_repo: UserRepository = Depends(get_user_re
     return user_profile
 
 @router.post("/user/login")
-def login_user(email: str, password:str, user_repo: UserRepository = Depends(get_user_repository)):
+def login_user(user_login: UserRegistration, user_repo: UserRepository = Depends(get_user_repository)):
     user_service = UserService(user_repo)
     try:
-        login_user = user_service.login_user(email, password)
+        login_user, token = user_service.login_user(user_login.email, user_login.password)
+
     except Exception as e:
         raise HTTPException(status_code=404, detail=str(e))
     if not login_user:
         raise HTTPException(status_code=403, detail=str("unautherise user"))
-    return login_user
+
+    return token
+
 
