@@ -23,11 +23,12 @@ class UserService:
             raise Exception("User not exist")
         return user
     
-    def login_user(self, email: str, password: str) -> bool:
+    def login_user(self, email: str, password: str) -> str:
         user = self.user_repo.get_user_by_email(email)
         if not user:
             raise Exception("User not exist")
         pwd = self.user_repo.get_user_password(email)
         pv = password_hasshing.decode_hash(password=password, hashed_password=pwd)
-        return pv
+        token = jwt_encode_decode.encode(user_id=user.id)
+        return pv, token
 
