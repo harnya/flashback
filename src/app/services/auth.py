@@ -51,4 +51,6 @@ class JWTEncodeDecode:
                 response = {"error": 401, "message": "Token decoding fail", "success": False}
         else:
             response = {"error": 401, "message": "Token required", "success": False}
+        if not response.get("success", False):
+            raise Exception("Invalid token")
         return response

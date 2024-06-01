@@ -6,9 +6,17 @@ from app.db.session import Session
 from app.models.user import UserRegistration
 from app.repositories.postgres.user import UserRepository
 from app.services.user import UserService
+from fastapi.security import OAuth2PasswordBearer
+from typing import Annotated
+from app.services.auth_bearer import JWTBearer
+# oauth2_scheme = OAuth2PasswordBearer(tokenUrl="token")
 
 
 router = APIRouter()
+
+# @router.get("/items/", dependencies=[Depends(JWTBearer())])
+# async def read_items():
+#     return {"token": token}
 
 def get_user_repository(conn:connection = Depends(Session)) -> UserRepository:
     return UserRepository(conn)
@@ -19,7 +27,7 @@ def register_user(user: UserRegistration, user_repo: UserRepository = Depends(ge
     user_service = UserService(user_repo)
     return user_service.register_user(user)
 
-@router.get("/user/{email}")
+@router.get("/user/{email}", dependencies=[Depends(JWTBearer())])
 def get_user_profile(email: str, user_repo: UserRepository = Depends(get_user_repository)):
     user_service = UserService(user_repo)
     try:
