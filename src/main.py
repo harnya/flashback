@@ -1,10 +1,12 @@
 from fastapi import FastAPI
 from app.api.endpoints import users
+from app.api.endpoints import memories
 from fastapi.staticfiles import StaticFiles
 app = FastAPI()
-# app = FastAPI(swagger_ui_parameters={"syntaxHighlight.theme": "obsidian"})
 
 app.include_router(users.router)
+app.include_router(memories.router)
+
 app.mount("/", StaticFiles(directory="web", html=True), name="web")
 
 if __name__ == "__main__":

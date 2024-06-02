@@ -21,6 +21,7 @@ class UserRepository:
     def create_user(self, user: UserRegistration) -> UserRegistration:
         with self.connection as conn:
             cursor = conn.cursor()
+            
             cursor.execute(
                 "INSERT INTO AUTH (email, password) VALUES (%s, %s)",
                 (user.email, user.password)
