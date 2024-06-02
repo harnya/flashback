@@ -1,22 +1,14 @@
-from fastapi import APIRouter, Depends
+from fastapi import APIRouter, Depends, HTTPException
 from psycopg2.extensions import connection
-from fastapi import HTTPException
-
 from app.db.session import Session
 from app.models.user import UserRegistration
 from app.repositories.postgres.user import UserRepository
-from app.services.user import UserService
-from fastapi.security import OAuth2PasswordBearer
-from typing import Annotated
 from app.services.auth_bearer import JWTBearer
-# oauth2_scheme = OAuth2PasswordBearer(tokenUrl="token")
-
+from app.services.user import UserService
 
 router = APIRouter()
 
-# @router.get("/items/", dependencies=[Depends(JWTBearer())])
-# async def read_items():
-#     return {"token": token}
+
 
 def get_user_repository(conn:connection = Depends(Session)) -> UserRepository:
     return UserRepository(conn)
@@ -46,7 +38,6 @@ def login_user(user_login: UserRegistration, user_repo: UserRepository = Depends
         raise HTTPException(status_code=404, detail=str(e))
     if not login_user:
         raise HTTPException(status_code=403, detail=str("unautherise user"))
-
     return token
 
 
