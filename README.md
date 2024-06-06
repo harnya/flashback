@@ -12,4 +12,12 @@ Technology:
 2. Docker
 3. Deployment
    
-   a. AWS 
+   a. AWS
+
+Aws Services:
+1. Lambda
+2. ECR
+3. Api Getway
+4. IAM
+
+application url: https://1jof9u9yya.execute-api.ap-south-1.amazonaws.com/prod/
