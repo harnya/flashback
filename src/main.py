@@ -24,6 +24,7 @@ app.include_router(memories.router)
 app.mount("/", StaticFiles(directory="web", html=True), name="web")
 # docker build -t memor -f docker/Dockerfile .
 # docker run -d --name mycontainer7 -p 8000:8000 memor
+
 handler = mangum.Mangum(app)
 
 if __name__ == "__main__":
