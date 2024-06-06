@@ -1,23 +1,31 @@
-# 
-FROM python:3.11
 
-# 
-WORKDIR /code
+# # 
+# FROM python:3.11
 
-# 
-COPY ./requirements.txt /code/requirements.txt
+# # 
+# WORKDIR /src
 
-# 
-RUN pip install --no-cache-dir --upgrade -r /code/requirements.txt
+# # 
+# COPY ./requirements.txt /src/requirements.txt
 
-# 
-COPY ./app /code/app
-COPY ./main.py /code/main.py
-COPY ./web /code/web
-# 
-EXPOSE 8000
+# # 
+# RUN pip install --no-cache-dir --upgrade -r /src/requirements.txt
 
-# CMD ["python", "main.py"]
-# CMD ["uvicorn", "main:app", "--host", "0.0.0.0", "--port", "8000"]
-CMD ["fastapi", "run", "main.py", "--port", "8000"]
+# # 
+# COPY ./app /src/appaa
+# COPY ./main.py /src/main.py
+# COPY ./web /src/web
+# # 
+# EXPOSE 8000
 
+# # CMD ["python", "main.py"]
+# # CMD ["uvicorn", "main:app", "--host", "0.0.0.0", "--port", "8000"]
+# CMD ["fastapi", "run", "main.py", "--port", "8000"]
+
+FROM public.ecr.aws/lambda/python:3.12
+COPY ./ ${LAMBDA_TASK_ROOT}
+WORKDIR /src
+COPY ./web ./web
+COPY ./requirements.txt ./requirements.txt
+RUN pip install -r ./requirements.txt
+CMD ["main.handler"]
