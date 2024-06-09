@@ -2,19 +2,21 @@
 
 Let's revisit the past.
 
-Technology:
+**Technology**:
+
 1. Backend:
-   
+
    a. fast api - freamwork
-   
+
    b. postgresql - database
-   
 2. Docker
 3. Deployment
-   
+
    a. AWS
 
+
 Aws Services [Infra is created using terraform]:
+
 1. Lambda
 2. ECR
 3. Api Getway

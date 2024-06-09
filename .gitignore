@@ -70,3 +70,5 @@ ENV/
 .vagrant
 .idea
 *.db
+
+.terraform*
