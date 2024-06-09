@@ -25,6 +25,7 @@ resource "aws_lambda_function_url" "lambda_function_url" {
   }
 }
 
+
 resource "aws_lambda_permission" "apigw_lambda" {
   statement_id  = "AllowAPIgatewayInvokation"
   action        = "lambda:InvokeFunction"
@@ -45,3 +46,4 @@ resource "aws_lambda_permission" "apigw_lambda_sub" {
   source_arn = "arn:aws:execute-api:${data.aws_region.current_region.name}:${data.aws_caller_identity.current.account_id
 }:${aws_api_gateway_rest_api.memoryapi.id}/*/*/*"
 }
+
