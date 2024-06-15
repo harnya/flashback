@@ -23,7 +23,7 @@ Aws Services [Infra is created using terraform]:
 4. IAM
 5. s3
 
-application url: https://1jof9u9yya.execute-api.ap-south-1.amazonaws.com/prod/
+application url: https://zjeuvd7vadffldhx6d5hfmh7ma0pehqn.lambda-url.ap-south-1.on.aws/
 
 
 Archiecture:
