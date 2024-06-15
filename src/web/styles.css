@@ -14,7 +14,6 @@
   flex-direction: column;
   justify-content: flex-start;
   text-align: left; /* Ensure text is left-aligned */
-
 }
 
 .timeline {
@@ -59,32 +58,22 @@
 .drawer {
   position: fixed;
   top: 0;
-  right: -100%;
+  right: -600px;
   height: 100%;
-  width: 100%;
-
-  max-width: 500px; /* Increase the width of the drawer */
-
-  background-color: #f8f9fa;
-  box-shadow: -2px 0 5px rgba(0, 0, 0, 0.5);
-  transition: right 0.3s;
+  width: 600px;
+  background: white;
+  box-shadow: -2px 0 5px rgba(0,0,0,0.5);
+  overflow-y: auto;
+  transition: right 0.3s ease;
   z-index: 1050;
-  overflow-y: auto; /* Make the drawer content scrollable */
 }
 
 .drawer.open {
   right: 0;
 }
 
-.drawer-content {
+.drawer .drawer-content {
   padding: 20px;
-}
-
-@media (max-width: 767px) {
-  .drawer {
-    width: 100%;
-    max-width: none;
-  }
 }
 
 /* Floating button styling */
@@ -93,12 +82,15 @@
   bottom: 20px;
   right: 20px;
   z-index: 1050;
-  border-radius: 50%;
-  width: 60px;
-  height: 60px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
 }
 
+.modal .modal-body {
+  max-height: 400px;
+  overflow-y: auto;
+}
+
+/* Ensure the preview image stays within the card */
+.card-img-top {
+  max-height: 200px;
+  object-fit: cover;
+}

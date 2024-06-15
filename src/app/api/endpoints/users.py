@@ -38,6 +38,6 @@ def login_user(user_login: UserRegistration, user_repo: UserRepository = Depends
         raise HTTPException(status_code=404, detail=str(e))
     if not login_user:
         raise HTTPException(status_code=403, detail=str("unautherise user"))
-    return token
+    return {"token":token}
 
 
