@@ -24,3 +24,8 @@ Aws Services [Infra is created using terraform]:
 5. s3
 
 application url: https://1jof9u9yya.execute-api.ap-south-1.amazonaws.com/prod/
+
+
+Archiecture:
+
+![memory drawio](https://github.com/harnya/flashback/assets/166941785/46fec7d6-0d74-4568-8320-da46e6946f15)
