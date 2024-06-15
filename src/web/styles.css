@@ -14,6 +14,7 @@
   flex-direction: column;
   justify-content: flex-start;
   text-align: left; /* Ensure text is left-aligned */
+
 }
 
 .timeline {
@@ -61,7 +62,9 @@
   right: -100%;
   height: 100%;
   width: 100%;
+
   max-width: 500px; /* Increase the width of the drawer */
+
   background-color: #f8f9fa;
   box-shadow: -2px 0 5px rgba(0, 0, 0, 0.5);
   transition: right 0.3s;
@@ -98,3 +101,4 @@
   justify-content: center;
   box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
 }
+
