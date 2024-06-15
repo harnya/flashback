@@ -10,14 +10,25 @@
 </head>
 <body>
 
+
 <!-- Navbar -->
-<nav class="navbar navbar-expand-lg navbar-light bg-light">
-  <a class="navbar-brand" href="#">Memory</a>
+<nav class="navbar navbar-expand-lg">
+  <a class="navbar-brand" href="#">
+    <img src="Memory2.png" alt="Logo" style="height: 50px; margin-right: 1px;" width="180px">
+
+  </a>
+
   <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
     <span class="navbar-toggler-icon"></span>
   </button>
   <div class="collapse navbar-collapse" id="navbarNav">
-    <ul class="navbar-nav mr-auto">
+
+    <form class="form-inline my-2 my-lg-0 mr-auto">
+      <input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search">
+      <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
+    </form>
+    <ul class="navbar-nav">
+
       <li class="nav-item">
         <a class="nav-link" href="#">Login</a>
       </li>
@@ -25,11 +36,7 @@
         <a class="nav-link" href="#">Logout</a>
       </li>
     </ul>
-    <form class="form-inline my-2 my-lg-0">
-      <input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search">
-      <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
-    </form>
-    <button class="btn btn-primary ml-3" id="addNewCardButton">Add New Memory</button>
+
   </div>
 </nav>
 
@@ -54,18 +61,30 @@
     <!-- Timeline Area -->
     <div class="col-md-2 d-none d-md-block">
       <ul class="timeline">
+
         <li class="timeline-item"><span class="timeline-date">2024</span> </li>
         <li class="timeline-item"><span class="timeline-date">2023</span> </li>
         <li class="timeline-item"><span class="timeline-date">2022</span> </li>
+
       </ul>
     </div>
   </div>
 </div>
 
+
+<!-- Floating Button -->
+<button class="btn btn-primary floating-btn" id="addNewCardButton">
+  <i class="fas fa-plus"></i>
+</button>
+
 <!-- Drawer for adding new card -->
 <div class="drawer" id="drawer">
   <div class="drawer-content">
-    <button class="btn btn-danger" id="closeDrawerButton">Close</button>
+    <button class="close" id="closeDrawerButton" aria-label="Close">
+      <span aria-hidden="true">&times;</span>
+    </button>
+    <h4></h4>
+
     <form id="newCardForm">
       <div class="form-group">
         <label for="memoryDate">Memory Date</label>
@@ -78,9 +97,14 @@
       <div class="form-group">
         <label for="fileUpload">Upload Memory</label>
         <input type="file" class="form-control-file" id="fileUpload" required>
-        <img id="filePreview" class="img-fluid mt-2" style="max-height: 200px; display: none;" />
+        <div class="mt-2">
+          <img id="filePreview" class="img-fluid" style="max-height: 200px; display: none;" />
+          <button type="button" class="btn btn-danger btn-sm mt-2" id="removeImageButton" style="display: none;">Remove Image</button>
+        </div>
       </div>
       <button type="submit" class="btn btn-primary">Submit</button>
+      <button type="reset" class="btn btn-secondary">Reset</button>
+
     </form>
   </div>
 </div>
