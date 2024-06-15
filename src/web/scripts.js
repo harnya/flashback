@@ -75,8 +75,10 @@ $(document).ready(function() {
     const formData = new FormData();
     formData.append('memory_date', memoryDate);
     formData.append('memory', memoryText);
+    if (fileUpload) {
     formData.append('memory_file', fileUpload);
-
+    }
+    console.log(formData.keys, formData.values)
     $.ajax({
       url: 'http://localhost:8000/memory/add_memory',
       method: 'POST',
