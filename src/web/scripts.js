@@ -1,44 +1,68 @@
 $(document).ready(function() {
-  // Initialize SimpleMDE Markdown editor
-  var simplemde = new SimpleMDE({ element: document.getElementById("memoryText") });
-
-  // Function to fetch and display cards
-  function fetchCards() {
+  let simplemde = new SimpleMDE({ element: $("#memoryText")[0] });
+  
+  // Fetch and display cards
+  function fetchCards(page = 1) {
     $.ajax({
       url: 'http://localhost:8000/memory/',
       method: 'GET',
-      success: function(data) {
+      success: function(response) {
+        const cards = response;
         const cardContainer = $('#cardContainer');
         cardContainer.empty();
-        data.forEach(memory => {
+        
+        // Pagination logic
+        const cardsPerPage = 4;
+        const totalPages = Math.ceil(cards.length / cardsPerPage);
+        const start = (page - 1) * cardsPerPage;
+        const end = start + cardsPerPage;
+        const paginatedCards = cards.slice(start, end);
+        
+        // Render cards
+        paginatedCards.forEach(cardData => {
           const card = `
-            <div class="card mb-3">
-              <div class="card-header d-flex justify-content-between">
-                <span>${memory.created_by}</span>
-                <span>${memory.memory_date}</span>
+            <div class="card mb-4">
+              <div class="card-header">
+                <span>${cardData.created_by}</span>
+                <span class="float-right">${new Date(cardData.memory_date).toLocaleDateString()}</span>
               </div>
-              <div class="card-body">
-                <div class="row">
-                  <div class="col-md-4">
-                    <img src="${memory.file_url}" class="img-fluid" alt="Image">
-                  </div>
-                  <div class="col-md-8">
-                    <div class="card-text">${(memory.memory)}</div>
-                  </div>
+              <div class="card-body row">
+                <div class="col-md-4">
+                  <img src="${cardData.file_url}" class="img-fluid" alt="Memory Image">
+                </div>
+                <div class="col-md-8">
+                  <p>${marked(cardData.memory)}</p>
                 </div>
               </div>
             </div>
           `;
           cardContainer.append(card);
         });
+
+        // Render pagination
+        const pagination = $('#pagination');
+        pagination.empty();
+        for (let i = 1; i <= totalPages; i++) {
+          pagination.append(`
+            <li class="page-item ${i === page ? 'active' : ''}">
+              <a class="page-link" href="#">${i}</a>
+            </li>
+          `);
+        }
+        
+        // Pagination click event
+        $('.page-link').click(function(e) {
+          e.preventDefault();
+          const pageNum = parseInt($(this).text());
+          fetchCards(pageNum);
+        });
       },
       error: function(error) {
-        console.error('Error fetching data', error);
+        console.error('Error fetching cards', error);
       }
     });
   }
 
-  // Fetch cards on page load
   fetchCards();
 
   // Handle drawer opening
@@ -58,16 +82,21 @@ $(document).ready(function() {
       const reader = new FileReader();
       reader.onload = function(e) {
         $('#filePreview').attr('src', e.target.result).show();
-      }
+        $('#removeImageButton').show();
+      };
       reader.readAsDataURL(file);
-    } else {
-      $('#filePreview').hide();
     }
+  });
+
+  // Handle remove image
+  $('#removeImageButton').click(function() {
+    $('#fileUpload').val('');
+    $('#filePreview').hide().attr('src', '');
+    $(this).hide();
   });
 
   // Handle form submission
   $('#newCardForm').submit(function(event) {
-    console.log(event)
     event.preventDefault();
     const memoryDate = $('#memoryDate').val();
     const memoryText = simplemde.value();
@@ -76,22 +105,104 @@ $(document).ready(function() {
     formData.append('memory_date', memoryDate);
     formData.append('memory', memoryText);
     if (fileUpload) {
-    formData.append('memory_file', fileUpload);
+      formData.append('memory_file', fileUpload);
     }
-    console.log(formData.keys, formData.values)
+
+      $.ajax({
+        url: 'http://localhost:8000/memory/add_memory',
+        method: 'POST',
+        data: formData,
+        processData: false,
+        contentType: false,
+        success: function(response) {
+          $('#drawer').removeClass('open');
+          fetchCards();
+        },
+        error: function(error) {
+          console.error('Error submitting form', error);
+        }
+      });
+    
+  });
+
+  // Handle login modal opening
+  $('#loginButton').click(function() {
+    $('#loginModal').modal('show');
+  });
+
+  // Handle login form submission
+  $('#loginForm').submit(function(event) {
+    event.preventDefault();
+    const email = $('#loginUsername').val();
+    const password = $('#loginPassword').val();
+
     $.ajax({
-      url: 'http://localhost:8000/memory/add_memory',
+      url: 'http://localhost:8000/user/login',
       method: 'POST',
-      data: formData,
-      processData: false,
-      contentType: false,
-      success: function() {
-        $('#drawer').removeClass('open');
-        fetchCards();
+      data: JSON.stringify({ email, password }),
+      contentType: 'application/json',
+      success: function(response) {
+        const { token, user } = response;
+        localStorage.setItem('token', token);
+        localStorage.setItem('user', JSON.stringify(email));
+        $('#loginModal').modal('hide');
+        updateAuthUI();
       },
       error: function(error) {
-        console.error('Error submitting form', error);
+        console.error('Error logging in', error);
+        alert("Invalid authentication")
       }
     });
   });
+
+  // Handle register link click
+  $('#registerLink').click(function(e) {
+    e.preventDefault();
+    $('#loginModal').modal('hide');
+    $('#registerModal').modal('show');
+  });
+
+  // Handle register form submission
+  $('#registerForm').submit(function(event) {
+    event.preventDefault();
+    const email = $('#registerUsername').val();
+    const password = $('#registerPassword').val();
+
+    $.ajax({
+      url: 'http://localhost:8000/register',
+      method: 'POST',
+      data: JSON.stringify({ email, password }),
+      contentType: 'application/json',
+      success: function(response) {
+        $('#registerModal').modal('hide');
+        $('#loginModal').modal('show');
+      },
+      error: function(error) {
+        console.error('Error registering', error);
+        alert("Error in registration")
+      }
+    });
+  });
+
+  // Update UI based on authentication state
+  function updateAuthUI() {
+    const user = JSON.parse(localStorage.getItem('user'));
+    if (user) {
+      $('#loginNavItem').hide();
+      $('#logoutNavItem').show();
+      $('#usernameDisplay').text(user);
+    } else {
+      $('#loginNavItem').show();
+      $('#logoutNavItem').hide();
+    }
+  }
+
+  // Handle logout
+  $('#logoutButton').click(function() {
+    localStorage.removeItem('token');
+    localStorage.removeItem('user');
+    updateAuthUI();
+  });
+
+  updateAuthUI();
 });
