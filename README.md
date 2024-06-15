@@ -14,11 +14,13 @@ Let's revisit the past.
 
    a. AWS
 
-Aws Services:
+
+Aws Services [Infra is created using terraform]:
 
 1. Lambda
 2. ECR
 3. Api Getway
 4. IAM
+5. s3
 
 application url: https://1jof9u9yya.execute-api.ap-south-1.amazonaws.com/prod/
