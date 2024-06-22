@@ -35,7 +35,8 @@ class S3Media:
                 Body=image_data,
                 ContentType=file.content_type
             )
-            return f"https://{self.bucket}.s3.amazonaws.com/memory_files/{file.filename}"
+            return f"https://{self.bucket}.s3.amazonaws.com/{file.filename}"
+
 
         except Exception as e:
             print("0000000>3", e)
