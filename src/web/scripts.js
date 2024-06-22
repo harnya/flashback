@@ -106,6 +106,7 @@ $(document).ready(function() {
     formData.append('memory', memoryText);
     if (fileUpload) {
       formData.append('memory_file', fileUpload);
+
     }
         for (var pair of formData.entries()) {
         console.log(pair[0]+ ', ' + pair[1], simplemde.value());
@@ -114,6 +115,7 @@ $(document).ready(function() {
 
       $.ajax({
         url: 'https://hmago5j35khdhox4w5gzc74jee0wlyfi.lambda-url.ap-south-1.on.aws/memory/add_memory',
+
         method: 'POST',
         data: formData,
         processData: false,
@@ -142,6 +144,7 @@ $(document).ready(function() {
 
     $.ajax({
       url: 'https://t9kqble7me.execute-api.ap-south-1.amazonaws.com/dev/user/login',
+
       method: 'POST',
       data: JSON.stringify({ email, password }),
       contentType: 'application/json',
@@ -173,7 +176,9 @@ $(document).ready(function() {
     const password = $('#registerPassword').val();
 
     $.ajax({
+
       url: 'https://t9kqble7me.execute-api.ap-south-1.amazonaws.com/dev/register',
+
       method: 'POST',
       data: JSON.stringify({ email, password }),
       contentType: 'application/json',

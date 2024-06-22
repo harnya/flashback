@@ -24,6 +24,7 @@ app.include_router(memories.router)
 
 # app.mount("/", StaticFiles(directory="web", html=True), name="web")
 
+
 # app.mount("/", StaticFiles(directory="src/web", html=True), name="web")
 from starlette.responses import FileResponse 
 
