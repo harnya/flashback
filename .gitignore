@@ -72,3 +72,4 @@ ENV/
 *.db
 
 .terraform*
+.DS_Store

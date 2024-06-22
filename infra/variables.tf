@@ -11,5 +11,5 @@ variable "environmanet" {
 }
 
 variable "project_name" {
-  default = "memorymain"
+  default = "memorymaina"
 }

@@ -1,7 +1,7 @@
 
 
 resource "aws_api_gateway_rest_api" "memoryapi" {
-  name = "momo12"
+  name = "momo1"
 }   
 
 

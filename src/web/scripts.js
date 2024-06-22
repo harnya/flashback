@@ -4,7 +4,7 @@ $(document).ready(function() {
   // Fetch and display cards
   function fetchCards(page = 1) {
     $.ajax({
-      url: 'http://localhost:8000/memory/',
+      url: 'https://t9kqble7me.execute-api.ap-south-1.amazonaws.com/dev/memory/',
       method: 'GET',
       success: function(response) {
         const cards = response;
@@ -106,10 +106,16 @@ $(document).ready(function() {
     formData.append('memory', memoryText);
     if (fileUpload) {
       formData.append('memory_file', fileUpload);
+
+    }
+        for (var pair of formData.entries()) {
+        console.log(pair[0]+ ', ' + pair[1], simplemde.value());
     }
 
+
       $.ajax({
-        url: 'http://localhost:8000/memory/add_memory',
+        url: 'https://hmago5j35khdhox4w5gzc74jee0wlyfi.lambda-url.ap-south-1.on.aws/memory/add_memory',
+
         method: 'POST',
         data: formData,
         processData: false,
@@ -137,7 +143,8 @@ $(document).ready(function() {
     const password = $('#loginPassword').val();
 
     $.ajax({
-      url: 'http://localhost:8000/user/login',
+      url: 'https://t9kqble7me.execute-api.ap-south-1.amazonaws.com/dev/user/login',
+
       method: 'POST',
       data: JSON.stringify({ email, password }),
       contentType: 'application/json',
@@ -169,7 +176,9 @@ $(document).ready(function() {
     const password = $('#registerPassword').val();
 
     $.ajax({
-      url: 'http://localhost:8000/register',
+
+      url: 'https://t9kqble7me.execute-api.ap-south-1.amazonaws.com/dev/register',
+
       method: 'POST',
       data: JSON.stringify({ email, password }),
       contentType: 'application/json',
