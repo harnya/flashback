@@ -37,6 +37,7 @@ class S3Media:
             )
             return f"https://{self.bucket}.s3.amazonaws.com/{file.filename}"
 
+
         except Exception as e:
             print("0000000>3", e)
             return "ok"
