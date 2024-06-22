@@ -10,8 +10,15 @@
    a. fast api - freamwork
 
    b. postgresql - database
-2. Docker
-3. Deployment
+2. Frontend:
+   
+   a. HTML
+   
+   b. CSS
+   
+   d. JS
+3. Docker
+4. Deployment
 
    a. AWS
 
@@ -22,7 +29,7 @@ Aws Services [Infra is created using terraform]:
 2. ECR
 3. Api Getway
 4. IAM
-5. s3
+5. S3
 
 application url: https://hmago5j35khdhox4w5gzc74jee0wlyfi.lambda-url.ap-south-1.on.aws/
 
