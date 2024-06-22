@@ -18,7 +18,7 @@ def get_memory_repository(conn:connection = Depends(Session)) -> MemoryRepositor
 async def create_file(
     memory_details: Annotated[MemoryForm, Depends(MemoryForm.as_form)],
     memory_repo: MemoryRepository = Depends(get_memory_repository),
-    memory_file: Annotated[UploadFile, File()] = None,
+    memory_file: Annotated[UploadFile, File(...)] = None,
     ):
     memory_service = MemoryService(memory_repo=memory_repo)
     memory = Memory(**memory_details.dict())

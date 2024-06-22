@@ -10,7 +10,7 @@ class MemoryService:
 
     def add_memory(self, memory: Memory, memory_file: bytes | None) -> Memory:
         s3_media = S3Media()
-
+        print(type(memory_file))
         memory_url = s3_media.upload_file(file=memory_file)
         if not memory_file:
             memory_url = "https://avatars.githubusercontent.com/u/21107732?v=4"

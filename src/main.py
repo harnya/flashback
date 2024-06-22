@@ -21,9 +21,15 @@ import mangum
 app.include_router(users.router)
 app.include_router(memories.router)
 
-app.mount("/", StaticFiles(directory="web", html=True), name="web")
-# app.mount("/", StaticFiles(directory="src/web", html=True), name="web")
 
+# app.mount("/", StaticFiles(directory="web", html=True), name="web")
+
+# app.mount("/", StaticFiles(directory="src/web", html=True), name="web")
+from starlette.responses import FileResponse 
+
+@app.get("/")
+def read_index():
+    return FileResponse('web/index.html')
 # docker build -t memor -f docker/Dockerfile .
 # docker run -d --name mycontainer7 -p 8000:8000 memor
 
